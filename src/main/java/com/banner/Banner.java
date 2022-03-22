@@ -23,10 +23,15 @@ public class Banner {
             input.append(buffer,0,len);
         }
 
+        isr.close();
         return input.toString();
     }
 
-    public void update(String content){
-
+    public void update(String content) throws IOException {
+        OutputStream os = new FileOutputStream(fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(os,8192);
+        bos.write(content.getBytes(StandardCharsets.UTF_8));
+        bos.flush();
+        bos.close();
     }
 }
