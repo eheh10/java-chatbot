@@ -20,7 +20,7 @@ public class SystemCommand {
         String meta = command.get(0); // e|exit or f|file or u|update
 
         if(meta.equals("e")||meta.equals("exit")){
-            exitBanner.display();
+            System.out.println(exitBanner.display());
             System.exit(0);
         }else if(meta.equals("f")||meta.equals("file")){
             System.out.println(baseFile.getSaveFilePath());

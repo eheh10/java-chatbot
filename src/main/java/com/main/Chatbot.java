@@ -15,7 +15,7 @@ public class Chatbot {
     public static void main(String[] args) throws IOException {
         System.out.println("==========챗봇 프로그램==========");
         BootBanner bootBanner = new BootBanner();
-        bootBanner.display();
+        System.out.println(bootBanner.display());
 
         InputStream is = System.in;
         BufferedInputStream bis = new BufferedInputStream(is,1024);
