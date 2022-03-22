@@ -14,13 +14,8 @@ public class CalCommand {
             return;
         }
 
-        if (checkNumber(command.get(0))){
+        if (checkNumber(command.get(0)) && checkNumber(command.get(2))){
             left = Integer.parseInt(command.get(0));
-        }else{
-            return;
-        }
-
-        if (checkNumber(command.get(2))){
             right = Integer.parseInt(command.get(2));
         }else{
             return;
@@ -46,7 +41,6 @@ public class CalCommand {
             System.out.println("error: `"+op+"`는 올바르지 않은 메타데이터 입니다.\n" +
                     "다음의 메타 데이터중 하나를 선택해주세요.\n" +
                     "[+|-|*|/]");
-            return;
         }
     }
 
