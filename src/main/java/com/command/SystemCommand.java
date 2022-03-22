@@ -29,6 +29,10 @@ public class SystemCommand {
             boolean defaultBanner = !Arrays.asList("b","banner","e","exit","f","file").contains(updateFile);
             String txt = String.join(" ",command.subList(defaultBanner?1:2,command.size()));
 
+            if (defaultBanner){
+                updateFile = "b";
+            }
+
             if(updateFile.equals("f")||updateFile.equals("file")){
                 baseFile.setRelativeFilePath(command.get(2));
             }else{
