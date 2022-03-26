@@ -42,6 +42,7 @@ public class FileCommand {
                         "[c|cur|current|txt:fileName] [c|commit]\n" +
                         "[c|cur|current|txt:fileName] [r|rollback]"
                     );
+                    checkOpenMode();
                     return;
                 }else if(openFileList.size()==0){
                     System.out.println("error: 열려 있는 파일이 없습니다.");
@@ -55,6 +56,7 @@ public class FileCommand {
             File currentFile = new File(Paths.get(defaultPath,currentFileName).toString());
             if (!currentFile.exists()){
                 System.out.println("warning: `"+currentFileName+"`는 존재하지 않는 파일 입니다.");
+                checkOpenMode();
                 return;
             }
 
@@ -104,6 +106,7 @@ public class FileCommand {
             EditFile ef = searchEditFile(currentFileName);
             if (ef.getCurrentFile()==null){
                 System.out.println("warning: "+currentFileName+ "는 열려있는 파일이 아닙니다.");
+                checkOpenMode();
                 return;
             }
 
@@ -124,9 +127,11 @@ public class FileCommand {
                     "[c|cur|current|txt:fileName] [c|commit]\n" +
                     "[c|cur|current|txt:fileName] [r|rollback]"
                 );
+                checkOpenMode();
                 return;
             }
         }
+        checkOpenMode();
     }
 
     static void displayList(String mode){
@@ -170,6 +175,13 @@ public class FileCommand {
             }
         }
         return new EditFile();
+    }
+
+    public static void checkOpenMode() throws IOException {
+        if (openFileList.size()!=0){
+            EditFile prevEf = openFileList.get(openFileList.size()-1);
+            FileCommand.action(new ArrayList<>(Arrays.asList(prevEf.getCurrentFile().getName(), prevEf.getIsAppend()?"a":"w")));
+        }
     }
 
 }
