@@ -73,6 +73,7 @@ public class FileCommand {
                             os = new FileOutputStream(currentFile);
                         } else if (mode.equals("a") || mode.equals("append")) {
                             os = new FileOutputStream(currentFile, true);
+                            ef.setIsAppend(true);
                         }
                         ef.setOutputStream(os);
                         openFileList.add(ef);
@@ -82,18 +83,18 @@ public class FileCommand {
                     BufferedInputStream bis = new BufferedInputStream(is,8192);
                     InputStreamReader isr = new InputStreamReader(bis, StandardCharsets.UTF_8);
                     BufferedReader br = new BufferedReader(isr);
-                    StringBuilder newInput=new StringBuilder();
+                    ArrayList<String> newInput=new ArrayList<>();
 
                     String in;
                     while (!(in = br.readLine()).equals("")) {
-                        newInput.append(in);
+                        newInput.add(in);
                     }
 
-                    if (newInput.toString().split(" ")[0].equals("/file")) {
-                        String[] newCommand = newInput.toString().split(" ");
+                    if (newInput.get(0).split(" ")[0].equals("/file")) {
+                        String[] newCommand = newInput.get(0).split(" ");
                         action(new ArrayList<>(Arrays.asList(newCommand).subList(1, newCommand.length)));
                     } else {
-                        ef.write(newInput.toString());
+                        ef.write(newInput);
                         FileCommand.action(command);
                     }
                     return;
@@ -107,11 +108,12 @@ public class FileCommand {
             }
 
             if (mode.equals("e")||mode.equals("exit")){
+                ef.exit();
                 openFileList.remove(ef);
             }else if (mode.equals("c")||mode.equals("commit")){
                 ef.commit();
             }else if (mode.equals("rol")||mode.equals("rollback")){
-//                InputStreamUtil.rollback(os);
+                ef.rollback();
             }else if (!mode.equals("")){
                 System.out.println("error: `"+mode+"`는 올바르지 않은 메타데이터 입니다.\n" +
                     "다음의 메타 데이터중 하나를 선택해주세요.\n" +
