@@ -10,7 +10,7 @@ public class InputStreamUtil {
 
     public static String read(InputStream is) throws IOException {
         InputStreamReader rd = new InputStreamReader(is, StandardCharsets.UTF_8);
-        char[] cbuffer = new char[2];
+        char[] cbuffer = new char[100];
         int len=0;
         StringBuilder output=new StringBuilder();
 
