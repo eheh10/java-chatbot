@@ -29,8 +29,12 @@ public class EditFile {
         defaultContent = InputStreamUtil.read(new FileInputStream(currentFile));
     }
 
-    public void setIsAppend(boolean isAppend) throws IOException {
+    public void setIsAppend(boolean isAppend){
         this.isAppend=isAppend;
+    }
+
+    public boolean getIsAppend(){
+        return isAppend;
     }
 
     public void write(ArrayList<String> inputText){
