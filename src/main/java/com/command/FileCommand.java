@@ -35,7 +35,7 @@ public class FileCommand {
             String currentFileName = "";
 
             if (defaultFile){
-                if(command.size()!=2 || Arrays.asList("c","commit","rol","rollback","e","exit").contains(mode)){
+                if(command.size()!=2 || !Arrays.asList("c","commit","rol","rollback","e","exit").contains(mode)){
                     System.out.println("error: `"+mode+"`는 올바르지 않은 메타데이터 입니다.\n" +
                         "다음의 메타 데이터중 하나를 선택해주세요.\n" +
                         "[c|cur|current|txt:fileName] [e|exit]\n" +
