@@ -64,6 +64,7 @@ public class FileCommand {
                 if (mode.equals("") || mode.equals("r") || mode.equals("read")) {
                     String output = InputStreamUtil.read(new FileInputStream(currentFile));
                     System.out.println(output);
+                    checkOpenMode();
                     return;
                 }else if (Arrays.asList("w","write","a","append").contains(mode)){
                     EditFile ef = searchEditFile(currentFileName);
