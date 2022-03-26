@@ -46,7 +46,10 @@ public class EditFile {
 
         BufferedOutputStream bos = new BufferedOutputStream(os,8192);
 
-        bos.write("\n".getBytes(StandardCharsets.UTF_8));
+        if (isAppend || commit.size()!=1){
+            bos.write("\n".getBytes(StandardCharsets.UTF_8));
+        }
+
         bos.write(String.join("",commit.subList(commitIdx,commit.size())).getBytes(StandardCharsets.UTF_8));
         bos.flush();
 
