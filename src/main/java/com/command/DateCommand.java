@@ -18,6 +18,7 @@ public class DateCommand {
                 String meta = command.get(1);
                 boolean defaultDay = meta.equals("+")||meta.equals("-");
                 String op = defaultDay?meta:"";
+                dayNum = defaultDay&&command.size()>2 ? Integer.parseInt(command.get(2)) :0;
 
                 if (!defaultDay) {
                     try {
