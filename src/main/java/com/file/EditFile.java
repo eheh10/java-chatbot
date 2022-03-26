@@ -62,10 +62,14 @@ public class EditFile {
         OutputStream os = new FileOutputStream(currentFile,false);
         BufferedOutputStream bos = new BufferedOutputStream(os,8192);
 
-        if (commitIdx==minIdx){
+        if (commitIdx-1 <= minIdx){
             bos.write((defaultContent).getBytes(StandardCharsets.UTF_8));
             bos.flush();
-            System.out.println("warning: rollback 할 수 있는 commit 이 없습니다.");
+            bos.close();
+
+            if (commitIdx == minIdx) {
+                System.out.println("warning: rollback 할 수 있는 commit 이 없습니다.");
+            }
             return;
         }
 
@@ -75,6 +79,7 @@ public class EditFile {
         bos.write(String.join("",commit.subList(0,--commitIdx)).getBytes(StandardCharsets.UTF_8));
 
         bos.flush();
+        bos.close();
     }
 
     public void exit() throws IOException {
