@@ -17,6 +17,7 @@ public class InputStreamUtil {
         while((len=rd.read(cbuffer))!=-1){
             output.append(cbuffer,0,len);
         }
+        rd.close();
         return output.toString();
     }
 }
