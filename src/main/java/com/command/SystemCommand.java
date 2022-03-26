@@ -44,7 +44,7 @@ public class SystemCommand {
             }
 
         }else{
-            System.out.println("error: `"+meta+"`는 올바르지 않은 메타데이터 입니다.\n");
+            System.out.println("error: `"+meta+"`는 올바르지 않은 메타데이터 입니다.");
             displayMeta();
         }
     }
