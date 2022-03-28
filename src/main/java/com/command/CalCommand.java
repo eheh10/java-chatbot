@@ -1,10 +1,19 @@
 package com.command;
 
+import com.operation.*;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class CalCommand {
+public class CalCommand implements Command {
 
-    public static void action(ArrayList<String> command){
+    @Override
+    public boolean isSupport(String command) {
+        return Objects.equals("/cal",command);
+    }
+
+    public void action(ArrayList<String> command){
         int left = 0, right = 0;
 
         if(command.size()!=3){
