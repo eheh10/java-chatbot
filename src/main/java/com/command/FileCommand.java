@@ -10,11 +10,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
-public class FileCommand {
+public class FileCommand implements Command{
     static ArrayList<EditFile> openFileList = new ArrayList<>();
 
-    public static void action(ArrayList<String> command) throws IOException {
+    public void action(ArrayList<String> command) throws IOException {
         String meta = command.size()>0? command.get(0): "list";
         boolean defaultListMode = Arrays.asList("ec","eo","o","open","e","exit").contains(meta);
         boolean defaultFile = Arrays.asList("c","cur","current").contains(meta);
@@ -98,7 +99,7 @@ public class FileCommand {
                         action(new ArrayList<>(Arrays.asList(newCommand).subList(1, newCommand.length)));
                     } else {
                         ef.write(newInput);
-                        FileCommand.action(command);
+                        action(command);
                     }
                     return;
                 }
@@ -133,6 +134,11 @@ public class FileCommand {
             }
         }
         checkOpenMode();
+    }
+
+    @Override
+    public boolean isSupport(String command) {
+        return Objects.equals("/file",command);
     }
 
     static void displayList(String mode){
@@ -181,7 +187,7 @@ public class FileCommand {
     public static void checkOpenMode() throws IOException {
         if (openFileList.size()!=0){
             EditFile prevEf = openFileList.get(openFileList.size()-1);
-            FileCommand.action(new ArrayList<>(Arrays.asList(prevEf.getCurrentFile().getName(), prevEf.getIsAppend()?"a":"w")));
+            new FileCommand().action(new ArrayList<>(Arrays.asList(prevEf.getCurrentFile().getName(), prevEf.getIsAppend()?"a":"w")));
         }
     }
 
