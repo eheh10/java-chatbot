@@ -7,10 +7,16 @@ import com.file.BaseFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
-public class SystemCommand {
+public class SystemCommand implements Command{
+    private final BootBanner bootBanner;
 
-    public static void action(BootBanner bootBanner, ArrayList<String> command) throws IOException {
+    public SystemCommand(BootBanner bootBanner){
+        this.bootBanner=bootBanner;
+    }
+
+    public void action(ArrayList<String> command) throws IOException {
         if (command.size()==0){
             displayMeta();
         }
@@ -47,6 +53,11 @@ public class SystemCommand {
             System.out.println("error: `"+meta+"`는 올바르지 않은 메타데이터 입니다.");
             displayMeta();
         }
+    }
+
+    @Override
+    public boolean isSupport(String command) {
+        return Objects.equals("/system",command);
     }
 
     public static void displayMeta(){
