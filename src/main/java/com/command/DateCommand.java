@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
-public class DateCommand {
+public class DateCommand implements Command{
 
-    public static void action(ArrayList<String> command){
+    public void action(ArrayList<String> command){
         LocalDate date = LocalDate.now();
         int dayNum = 0;
 
@@ -71,6 +72,11 @@ public class DateCommand {
             }
         }
         System.out.println(date.plusDays(dayNum).format(DateTimeFormatter.ISO_LOCAL_DATE)); //yyyy-MM-dd
+    }
+
+    @Override
+    public boolean isSupport(String command) {
+        return Objects.equals("/date",command);
     }
 
     static boolean isNumber(String data){
