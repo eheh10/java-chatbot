@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class BaseFile {
     private static final String AB_ROUTE = new File("").getAbsolutePath();
-    private String relativeFilePath = "resource";
+    private static String relativeFilePath = "resource";
 
     public void setRelativeFilePath(String relativeFilePath) throws IOException {
         File oldFilePath = new File(Paths.get(AB_ROUTE,this.relativeFilePath).toString());
