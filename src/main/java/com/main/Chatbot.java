@@ -26,7 +26,7 @@ public class Chatbot {
             String command = input[0];
             ArrayList<String> meta = new ArrayList<>(Arrays.asList(input).subList(1,input.length));
 
-            Command cmd = Stream.of(new SystemCommand(bootBanner), new CalCommand(), new DateCommand(), new FileCommand(), new ErrorCommand())
+            Command cmd = Stream.of(new SystemCommand(bootBanner), new CalCommand(), new DateCommand(), new FileCommand(), new ErrorCommand(command))
                     .filter(_cmd -> _cmd.isSupport(command))
                     .findFirst()
                     .orElseThrow();
