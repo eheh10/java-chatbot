@@ -3,10 +3,11 @@ package com.command;
 import com.banner.BootBanner;
 import com.banner.ExitBanner;
 import com.file.BaseFile;
+import com.system.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class SystemCommand implements Command{
@@ -16,57 +17,28 @@ public class SystemCommand implements Command{
         this.bootBanner=bootBanner;
     }
 
-    public void action(ArrayList<String> command) throws IOException {
-        if (command.size()==0){
-            displayMeta();
-        }
-
-        ExitBanner exitBanner = new ExitBanner();
-        BaseFile baseFile = new BaseFile();
-        String meta = command.get(0); // e|exit or f|file or u|update
-
-        if(meta.equals("e")||meta.equals("exit")){
-            System.out.println(exitBanner.display());
-            System.exit(0);
-        }else if(meta.equals("f")||meta.equals("file")){
-            System.out.println(baseFile.getSaveFilePath());
-        }else if(meta.equals("u")||meta.equals("update")){
-            String updateFile = command.get(1);
-            boolean defaultBanner = !Arrays.asList("b","banner","e","exit","f","file").contains(updateFile);
-            String txt = String.join(" ",command.subList(defaultBanner?1:2,command.size()));
-
-            if (defaultBanner){
-                updateFile = "b";
-            }
-
-            if(updateFile.equals("f")||updateFile.equals("file")){
-                baseFile.setRelativeFilePath(command.get(2));
-            }else{
-                if (updateFile.equals("b")||updateFile.equals("banner")){
-                    bootBanner.update(txt);
-                }else if (updateFile.equals("e")||updateFile.equals("exit")){
-                    exitBanner.update(txt);
-                }
-            }
-
-        }else{
-            System.out.println("error: `"+meta+"`는 올바르지 않은 메타데이터 입니다.");
-            displayMeta();
-        }
-    }
-
     @Override
     public boolean isSupport(String command) {
         return Objects.equals("/system",command);
     }
 
-    public static void displayMeta(){
-        System.out.println("다음의 메타 데이터중 하나를 선택해주세요.\n" +
-                "[e|exit]\n" +
-                "[f|file]\n" +
-                "[u|update] [b|banner|] [txt:banner]\n" +
-                "[u|update] [e|exit] [txt:bye] \n" +
-                "[u|update] [f|file] [txt:relativeFilePath]");
+    public void action(ArrayList<String> command) throws IOException {
+        String subCommand = command.size() > 0? command.get(0): "";
+
+        ExitBanner exitBanner = new ExitBanner();
+        BaseFile baseFile = new BaseFile();
+
+        List<SystemMeta> systemMetas = List.of(new SystemExit(exitBanner)
+                                            ,new SystemFile(baseFile)
+                                            ,new SystemUpdate(baseFile,bootBanner,exitBanner)
+                                            ,new SystemError()
+                                        );
+
+        SystemMeta systemMeta = systemMetas.stream()
+                                .filter(meta -> meta.isSupport(subCommand))
+                                .findFirst()
+                                .orElseThrow();
+        systemMeta.execute(command);
     }
 
 }
