@@ -33,12 +33,11 @@ public class SystemCommand implements Command{
                                             ,new SystemUpdate(baseFile,bootBanner,exitBanner)
                                             ,new SystemError()
                                         );
+        SystemOperation systemOperation = new SystemOperation(systemMetas, subCommand);
+        if (systemOperation.isSupport(subCommand)){
+            systemOperation.execute(command);
+        }
 
-        SystemMeta systemMeta = systemMetas.stream()
-                                .filter(meta -> meta.isSupport(subCommand))
-                                .findFirst()
-                                .orElseThrow();
-        systemMeta.execute(command);
     }
 
 }
