@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class SystemCommandTest {
+    private static BootBanner bootBanner = new MockBootBanner();
     private static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
     private static final PrintStream PRINT_STREAM = System.out;
     public static final String TEST_FILE = "test.txt";
-    public static final String TEST_CONTENT = "Hello Banner Test";
+    public static final String TEST_CONTENT = "Hello SystemCommand Test";
 
     @BeforeEach
     public void setStream() {
@@ -44,31 +45,37 @@ class SystemCommandTest {
     }
 
     @Test
+    void testIsSupport(){
+        // given
+        SystemCommand systemCommand = new SystemCommand(bootBanner);
+        String command = "/system";
+        // when
+        boolean actual = systemCommand.isSupport(command);
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(true);
+    }
+
+    @Test
     void testActionDefaultBanner() throws IOException {
-//        //given
-//        BootBanner bootBanner = new BootBanner(TEST_FILE);
-//        ArrayList<String> command = new ArrayList<>(Arrays.asList("update","updateBanner"));
-//        String expect = "error: `q`는 올바르지 않은 메타데이터 입니다.\n"+
-//                "다음의 메타 데이터중 하나를 선택해주세요.\n" +
-//                "[e|exit]\n" +
-//                "[f|file]\n" +
-//                "[u|update] [b|banner|] [txt:banner]\n" +
-//                "[u|update] [e|exit] [txt:bye] \n" +
-//                "[u|update] [f|file] [txt:relativeFilePath]";
-//
-//        //when
-//        SystemCommand.action(bootBanner,command);
-//
-//        //then
-//        String actual = OUTPUT_STREAM.toString().trim();
-//
-//        Assertions.assertThat(actual).isEqualTo(expect);
+        //given
+        SystemCommand systemCommand = new SystemCommand(bootBanner);
+        ArrayList<String> command = new ArrayList<>(Arrays.asList("update","hi,banner"));
+        String expect = "hi,banner";
+
+        //when
+        systemCommand.action(command);
+
+        //then
+        String actual = bootBanner.display();
+
+        Assertions.assertThat(actual).isEqualTo(expect);
     }
 
     @Test
     void testActionWrongMeta() throws IOException {
         //given
-        BootBanner bootBanner = new BootBanner();
+        SystemCommand systemCommand = new SystemCommand(bootBanner);
         ArrayList<String> command = new ArrayList<>(Arrays.asList("q"));
         String expect = "error: `q`는 올바르지 않은 메타데이터 입니다.\n"+
                 "다음의 메타 데이터중 하나를 선택해주세요.\n" +
@@ -79,11 +86,18 @@ class SystemCommandTest {
                 "[u|update] [f|file] [txt:relativeFilePath]";
 
         //when
-        SystemCommand.action(bootBanner,command);
+        systemCommand.action(command);
 
         //then
         String actual = OUTPUT_STREAM.toString().trim();
 
         Assertions.assertThat(actual).isEqualTo(expect);
+    }
+
+    private static class MockBootBanner extends BootBanner{
+        @Override
+        public String display() throws IOException {
+            return "hi,banner";
+        }
     }
 }
