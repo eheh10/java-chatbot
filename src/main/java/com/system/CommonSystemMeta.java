@@ -1,12 +1,12 @@
 package com.system;
 
-import java.util.List;
+import com.domain.meta.Meta;
 
 public abstract class CommonSystemMeta implements SystemMeta{
     @Override
-    public boolean isSupport(String subCommand) {
-        return getSupportCommand().contains(subCommand);
+    public boolean isSupport(Meta subCommand) {
+        return getSupportCommand().contain(subCommand);
     }
 
-    protected abstract List getSupportCommand();
+    protected abstract Meta getSupportCommand();
 }
