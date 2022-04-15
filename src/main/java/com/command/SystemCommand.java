@@ -31,9 +31,9 @@ public class SystemCommand implements Command{
         List<SystemMeta> systemMetas = List.of(new SystemExit(exitBanner)
                                             ,new SystemFile(baseFile)
                                             ,new SystemUpdate(baseFile,bootBanner,exitBanner)
-                                            ,new SystemError()
                                         );
-        SystemOperation systemOperation = new SystemOperation(systemMetas, subCommand);
+//        SystemOperation systemOperation = new SystemOperation(systemMetas, new SystemError(), subCommand);
+        SystemOperation systemOperation = SystemOperation.of(systemMetas, new SystemError(), subCommand); //.from() 은 파라미터가 1개인 경우 - 이름으로 힌트 주는게 장점
         if (systemOperation.isSupport(subCommand)){
             systemOperation.execute(command);
         }
