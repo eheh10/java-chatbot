@@ -2,6 +2,7 @@ package com.system;
 
 import com.banner.BootBanner;
 import com.banner.ExitBanner;
+import com.domain.meta.Meta;
 import com.file.BaseFile;
 import com.system.update.*;
 
@@ -38,8 +39,8 @@ public class SystemUpdate extends CommonSystemMeta{
     }
 
     @Override
-    protected List getSupportCommand() {
-        return List.of("u","update");
+    protected Meta getSupportCommand() {
+        return Meta.UPDATE;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.system;
 
+import com.domain.meta.Meta;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class SystemOperation implements SystemMeta{
     }
 
     @Override
-    public boolean isSupport(String subCommand) {
+    public boolean isSupport(Meta subCommand) {
         return Objects.nonNull(systemMeta);
     }
 
@@ -31,7 +33,7 @@ public class SystemOperation implements SystemMeta{
     }
 
     //팩토리 "메소드"
-    public static SystemOperation of(List<SystemMeta> systemMetas, SystemMeta defaultSystemMeta, String subCommand){
+    public static SystemOperation of(List<SystemMeta> systemMetas, SystemMeta defaultSystemMeta, Meta subCommand){
         if (systemMetas == null){
             return new SystemOperation(defaultSystemMeta);
         }

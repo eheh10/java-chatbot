@@ -1,9 +1,9 @@
 package com.system;
 
+import com.domain.meta.Meta;
 import com.file.BaseFile;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SystemFile extends CommonSystemMeta{
     private final BaseFile baseFile;
@@ -18,8 +18,8 @@ public class SystemFile extends CommonSystemMeta{
     }
 
     @Override
-    protected List getSupportCommand() {
-        return List.of("f","file");
+    protected Meta getSupportCommand() {
+        return Meta.FILE;
     }
 
 

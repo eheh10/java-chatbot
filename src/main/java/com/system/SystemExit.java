@@ -1,10 +1,10 @@
 package com.system;
 
 import com.banner.ExitBanner;
+import com.domain.meta.Meta;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SystemExit extends CommonSystemMeta{
     private final ExitBanner exitBanner;
@@ -20,8 +20,8 @@ public class SystemExit extends CommonSystemMeta{
     }
 
     @Override
-    protected List getSupportCommand() {
-        return List.of("e","exit");
+    protected Meta getSupportCommand() {
+        return Meta.EXIT;
     }
 
 }

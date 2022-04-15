@@ -9,6 +9,8 @@ public class Meta {
     public static final Meta BANNER = new Meta(Set.of("b","banner")); //set 으로 중복 방지
     public static final Meta EXIT = new Meta(Set.of("e","exit"));
     public static final Meta FILE = new Meta(Set.of("f","file"));
+    public static final Meta UPDATE = new Meta(Set.of("u","update"));
+    public static final Meta ERROR = new Meta(Set.of());
 
     private final Set<String> supports;
 

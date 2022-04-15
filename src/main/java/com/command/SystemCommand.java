@@ -2,6 +2,7 @@ package com.command;
 
 import com.banner.BootBanner;
 import com.banner.ExitBanner;
+import com.domain.meta.Meta;
 import com.file.BaseFile;
 import com.system.*;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class SystemCommand implements Command{
     private final BootBanner bootBanner;
@@ -23,8 +25,8 @@ public class SystemCommand implements Command{
     }
 
     public void action(ArrayList<String> command) throws IOException {
-        String subCommand = command.size() > 0? command.get(0): "";
-
+//        String subCommand = command.size() > 0? command.get(0): "";
+        Meta subCommand = new Meta(Set.of(command.size()>0?command.get(0):""));
         ExitBanner exitBanner = new ExitBanner();
         BaseFile baseFile = new BaseFile();
 
