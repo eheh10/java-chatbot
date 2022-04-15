@@ -18,7 +18,9 @@ public class UpdatePath extends CommonUpdate{
     }
 
     @Override
-    public void execute(String path) throws IOException {
-        baseFile.setRelativeFilePath(path);
+    public void execute(List<String> command) throws IOException {
+//        String[] elements = command.subList(2,command.size()).toArray(String[]::new);
+
+        baseFile.setRelativeFilePath(String.join(" ",command.subList(2,command.size())));
     }
 }

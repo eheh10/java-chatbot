@@ -17,8 +17,9 @@ public class UpdateExit extends CommonUpdate{
         return List.of("e","exit");
     }
 
+
     @Override
-    public void execute(String content) throws IOException {
-        exitBanner.update(content);
+    public void execute(List<String> command) throws IOException {
+        exitBanner.update(String.join(" ",command.subList(2,command.size())));
     }
 }

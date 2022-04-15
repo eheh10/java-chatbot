@@ -13,17 +13,12 @@ public class UpdateBoot extends CommonUpdate{
     }
 
     @Override
-    public boolean isSupport(String file) {
-        return true; //default file
-    }
-
-    @Override
     protected List getSupportFile() {
         return List.of("b","banner");
     }
 
     @Override
-    public void execute(String content) throws IOException {
-        bootBanner.update(content);
+    public void execute(List command) throws IOException {
+        bootBanner.update(String.join(" ",command.subList(2,command.size())));
     }
 }
